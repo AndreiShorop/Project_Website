@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>{% block title %}SchönesGlas – Mitarbeiterportal{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --clr-primary:   #1a4a7a;
+      --clr-primary-d: #0f2f52;
+      --clr-accent:    #c9971c;
+      --clr-bg:        #eef2f7;
+      --clr-surface:   #ffffff;
+      --clr-text:      #2c3e50;
+      --clr-muted:     #6b7a8d;
+      --clr-danger:    #c0392b;
+      --clr-danger-bg: #fdf2f2;
+      --clr-success:   #1e7e50;
+      --clr-success-bg:#f0faf5;
+      --clr-border:    #d5dce8;
+      --radius:        12px;
+      --radius-sm:     8px;
+      --shadow:        0 4px 24px rgba(0,0,0,.10);
+      --shadow-lg:     0 8px 40px rgba(0,0,0,.15);
+      --font-head:     'Playfair Display', Georgia, serif;
+      --font-body:     'Lato', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--clr-bg);
+      color: var(--clr-text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Top bar ── */
+    .portal-header {
+      background: var(--clr-primary);
+      color: #fff;
+      padding: .75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .portal-header .brand {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      letter-spacing: .03em;
+      color: #fff;
+      text-decoration: none;
+    }
+    .portal-header .brand span { color: var(--clr-accent); }
+    .portal-header .badge-portal {
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.12);
+      padding: .25rem .65rem;
+      border-radius: 20px;
+      color: rgba(255,255,255,.85);
+    }
+    .portal-header .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: .88rem;
+    }
+    .portal-header .worker-id {
+      color: rgba(255,255,255,.75);
+    }
+    .portal-header .btn-logout {
+      background: rgba(255,255,255,.12);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.25);
+      padding: .35rem .9rem;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      font-size: .82rem;
+      transition: background .2s;
+    }
+    .portal-header .btn-logout:hover { background: rgba(255,255,255,.22); }
+
+    /* ── Main content area ── */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 3rem 1rem;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--clr-surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2.5rem 2.75rem;
+      width: 100%;
+    }
+    .card-title {
+      font-family: var(--font-head);
+      font-size: 1.55rem;
+      color: var(--clr-primary);
+      margin-bottom: .35rem;
+    }
+    .card-subtitle {
+      color: var(--clr-muted);
+      font-size: .9rem;
+      margin-bottom: 1.75rem;
+    }
+
+    /* ── Form elements ── */
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label {
+      display: block;
+      font-size: .83rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--clr-muted);
+      margin-bottom: .45rem;
+    }
+    .form-group input {
+      width: 100%;
+      padding: .75rem 1rem;
+      border: 1.5px solid var(--clr-border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: .95rem;
+      color: var(--clr-text);
+      transition: border-color .2s, box-shadow .2s;
+      background: #fafbfd;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--clr-primary);
+      box-shadow: 0 0 0 3px rgba(26,74,122,.12);
+      background: #fff;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .8rem 1.6rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: .95rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: background .2s, transform .15s, box-shadow .2s;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn-primary {
+      background: var(--clr-primary);
+      color: #fff;
+      width: 100%;
+      justify-content: center;
+      margin-top: .5rem;
+    }
+    .btn-primary:hover { background: var(--clr-primary-d); box-shadow: 0 4px 16px rgba(26,74,122,.25); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--clr-primary);
+      border: 1.5px solid var(--clr-primary);
+    }
+    .btn-secondary:hover { background: var(--clr-primary); color: #fff; }
+    .btn-warning {
+      background: var(--clr-accent);
+      color: #fff;
+    }
+    .btn-warning:hover { background: #a87c18; box-shadow: 0 4px 16px rgba(201,151,28,.3); }
+    .btn-danger {
+      background: var(--clr-danger);
+      color: #fff;
+    }
+    .btn-danger:hover { background: #a93226; }
+    .btn-sm {
+      padding: .5rem 1.1rem;
+      font-size: .85rem;
+    }
+
+    /* ── Alert boxes ── */
+    .alert {
+      padding: .85rem 1.1rem;
+      border-radius: var(--radius-sm);
+      font-size: .9rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: flex-start;
+      gap: .6rem;
+    }
+    .alert-error {
+      background: var(--clr-danger-bg);
+      color: var(--clr-danger);
+      border-left: 3px solid var(--clr-danger);
+    }
+    .alert-success {
+      background: var(--clr-success-bg);
+      color: var(--clr-success);
+      border-left: 3px solid var(--clr-success);
+    }
+    .alert-icon { font-size: 1rem; flex-shrink: 0; margin-top: .05rem; }
+
+    /* ── Divider ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--clr-border);
+      margin: 1.5rem 0;
+    }
+
+    /* ── Footer ── */
+    .portal-footer {
+      background: var(--clr-primary-d);
+      color: rgba(255,255,255,.5);
+      text-align: center;
+      padding: 1rem;
+      font-size: .78rem;
+    }
+    .portal-footer a { color: rgba(255,255,255,.65); }
+
+    /* ── Info box ── */
+    .info-box {
+      background: #f4f7fb;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.15rem;
+      font-size: .85rem;
+      color: var(--clr-muted);
+      line-height: 1.6;
+    }
+    .info-box strong { color: var(--clr-text); }
+
+    /* ── Dashboard grid ── */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .stat-card {
+      background: linear-gradient(135deg, var(--clr-primary), #2563a8);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 1.5rem 1.75rem;
+    }
+    .stat-card .stat-label {
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      opacity: .75;
+      margin-bottom: .4rem;
+    }
+    .stat-card .stat-value {
+      font-family: var(--font-head);
+      font-size: 1.2rem;
+    }
+    .action-card {
+      background: var(--clr-surface);
+      border: 1.5px solid var(--clr-border);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.75rem;
+    }
+    .action-card .action-title {
+      font-weight: 700;
+      margin-bottom: .4rem;
+      color: var(--clr-text);
+    }
+    .action-card .action-desc {
+      font-size: .85rem;
+      color: var(--clr-muted);
+      margin-bottom: 1.1rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 520px) {
+      .card { padding: 1.75rem 1.25rem; }
+      main { padding: 1.5rem .75rem; }
+    }
+  </style>
+  {% block extra_style %}{% endblock %}
+</head>
+<body>
+
+<header class="portal-header">
+  <div style="display:flex;align-items:center;gap:.75rem;">
+    <a href="/site/" class="brand">Schönes<span>Glas</span></a>
+    <span class="badge-portal">Mitarbeiterportal</span>
+  </div>
+  {% block header_right %}{% endblock %}
+</header>
+
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="portal-footer">
+  &copy; 2026 SchönesGlas GmbH &nbsp;|&nbsp;
+  Nur für autorisiertes Personal &nbsp;|&nbsp;
+  IT-Support: <a href="mailto:it@SchoenesGlas.optik">it@SchoenesGlas.optik</a>
+</footer>
+
+</body>
+</html>

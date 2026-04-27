@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard – SchönesGlas Mitarbeiterportal{% endblock %}
+
+{% block header_right %}
+<div class="header-right">
+  <span class="worker-id">{{ session.worker_login }}</span>
+  <a href="{{ url_for('logout') }}" class="btn-logout">Abmelden</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div style="max-width:820px; width:100%;">
+
+  <!-- Welcome banner -->
+  <div style="margin-bottom:1.75rem;">
+    <h1 style="font-family:var(--font-head);font-size:1.75rem;color:var(--clr-primary);margin-bottom:.25rem;">
+      Willkommen, {{ worker.login }}
+    </h1>
+    <p style="color:var(--clr-muted);font-size:.92rem;">
+      Mitarbeiterportal &nbsp;·&nbsp; {{ worker.email }}
+    </p>
+  </div>
+
+  <!-- Info cards row -->
+  <div class="dashboard-grid">
+
+    <div class="stat-card">
+      <div class="stat-label">Mitarbeiter-ID</div>
+      <div class="stat-value">{{ worker.login }}</div>
+    </div>
+
+    <div class="stat-card" style="background:linear-gradient(135deg,#1e6a3e,#2ea05e);">
+      <div class="stat-label">E-Mail</div>
+      <div class="stat-value" style="font-family:var(--font-body);font-size:.98rem;word-break:break-all;">
+        {{ worker.email }}
+      </div>
+    </div>
+
+    <div class="stat-card" style="background:linear-gradient(135deg,#7b3c00,#c97020);">
+      <div class="stat-label">Status</div>
+      <div class="stat-value">Aktiv ✓</div>
+    </div>
+
+  </div>
+
+  <!-- Action cards -->
+  <div class="dashboard-grid">
+
+    <!-- ── Passwort zurücksetzen ── -->
+    <div class="action-card" style="border-color:var(--clr-accent);">
+      <div class="action-title">🔑 Passwort zurücksetzen</div>
+      <div class="action-desc">
+        Ändern Sie Ihr Anmelde-Passwort.<br>
+        Das neue Passwort muss mindestens 8 Zeichen lang sein.
+      </div>
+      <a href="{{ url_for('change_password') }}" class="btn btn-warning btn-sm">
+        Passwort ändern
+      </a>
+    </div>
+
+    <!-- ── IT Support ── -->
+    <div class="action-card">
+      <div class="action-title">🛠 IT-Support</div>
+      <div class="action-desc">
+        Probleme mit dem Portal oder Ihrem Konto?<br>
+        Kontaktieren Sie das IT-Team.
+      </div>
+      <a href="mailto:it@SchoenesGlas.optik" class="btn btn-secondary btn-sm">
+        IT kontaktieren
+      </a>
+    </div>
+
+    <!-- ── Back to website ── -->
+    <div class="action-card">
+      <div class="action-title">🌐 Zur Website</div>
+      <div class="action-desc">
+        Zurück zur öffentlichen SchönesGlas-Website.
+      </div>
+      <a href="/site/" class="btn btn-secondary btn-sm">
+        Website öffnen
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Abmelden button -->
+  <div style="text-align:right; margin-top:.5rem;">
+    <a href="{{ url_for('logout') }}" class="btn btn-danger btn-sm">
+      Abmelden
+    </a>
+  </div>
+
+</div>
+{% endblock %}

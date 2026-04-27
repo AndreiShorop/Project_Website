@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mitarbeiter-Login – SchönesGlas internes Mitarbeiterportal.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Mitarbeiter-Login – SchönesGlas</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="SchönesGlas – Zur Startseite">
+        <span class="logo-icon">
+          <svg width="46" height="22" viewBox="0 0 46 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="11" cy="11" r="9" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <circle cx="35" cy="11" r="9" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <path d="M20 11 Q23 8.5 26 11" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <line x1="2" y1="7" x2="0" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="44" y1="7" x2="46" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <div class="logo-text">
+          <span class="logo-name">SchönesGlas</span>
+          <span class="logo-tagline">Optikerkette</span>
+        </div>
+      </a>
+
+      <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox" aria-hidden="true">
+
+      <nav class="main-nav" role="navigation" aria-label="Hauptnavigation">
+        <a href="index.html"             class="nav-link">Startseite</a>
+        <a href="produkte.html"          class="nav-link">Produkte</a>
+        <a href="dienstleistungen.html"  class="nav-link">Dienstleistungen</a>
+        <a href="ueber-uns.html"         class="nav-link">Über uns</a>
+        <a href="kontakt.html"           class="nav-link nav-cta">Kontakt</a>
+        <a href="impressum.html"         class="nav-link">Impressum</a>
+        <a href="mitarbeiter-login.html" class="nav-link nav-link-staff active">🔒 Mitarbeiter</a>
+      </nav>
+
+      <label for="nav-toggle" class="nav-toggle" aria-label="Navigation öffnen">
+        <span></span><span></span><span></span>
+      </label>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="login-page" role="main">
+    <div class="login-card" role="region" aria-labelledby="login-heading">
+
+      <!-- Card Header -->
+      <div class="login-card-header">
+        <a href="index.html" class="logo" aria-label="SchönesGlas – Zur Startseite">
+          <span class="logo-icon">
+            <svg width="46" height="22" viewBox="0 0 46 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="11" cy="11" r="9" stroke="currentColor" stroke-width="2.5" fill="none"/>
+              <circle cx="35" cy="11" r="9" stroke="currentColor" stroke-width="2.5" fill="none"/>
+              <path d="M20 11 Q23 8.5 26 11" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <line x1="2" y1="7" x2="0" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="44" y1="7" x2="46" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <div class="logo-text">
+            <span class="logo-name">SchönesGlas</span>
+            <span class="logo-tagline">Optikerkette</span>
+          </div>
+        </a>
+
+        <div style="margin-top: 1.25rem;">
+          <span class="login-badge">🔒 Mitarbeiterbereich</span>
+        </div>
+        <h2 id="login-heading">Willkommen zurück</h2>
+        <p>Bitte melden Sie sich mit Ihren Zugangsdaten an, um das interne Mitarbeiterportal zu nutzen.</p>
+      </div>
+
+      <!-- Login Form – Backend: http://127.0.0.1:5000/login -->
+      <form
+        class="login-form"
+        action="http://127.0.0.1:5000/login"
+        method="post"
+        autocomplete="on"
+        aria-label="Mitarbeiter-Anmeldeformular"
+      >
+        <div class="form-group">
+          <label for="mitarbeiter-id">
+            Mitarbeiter-ID
+            <span class="required" aria-hidden="true">*</span>
+          </label>
+          <input
+            type="text"
+            id="mitarbeiter-id"
+            name="login"
+            class="form-control"
+            placeholder="z. B. SG-1042"
+            required
+            autocomplete="username"
+            inputmode="text"
+            pattern="SG-[0-9]{4,6}"
+            title="Format: SG-XXXX"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="passwort">
+            Passwort
+            <span class="required" aria-hidden="true">*</span>
+          </label>
+          <input
+            type="password"
+            id="passwort"
+            name="password"
+            class="form-control"
+            placeholder="••••••••••"
+            required
+            autocomplete="current-password"
+            minlength="8"
+          >
+        </div>
+
+        <div class="form-group">
+          <div class="form-check">
+            <input type="checkbox" id="angemeldet-bleiben" name="remember" value="1">
+            <label for="angemeldet-bleiben">Angemeldet bleiben (nur auf vertrauenswürdigen Geräten)</label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-login">
+          Anmelden
+        </button>
+      </form>
+
+      <div class="login-divider" aria-hidden="true">Sicherheitshinweis</div>
+
+      <!-- Security info box -->
+      <div class="info-box" role="note">
+        <p>
+          <strong>Hinweis:</strong> Dieses Portal ist ausschließlich für autorisierte Mitarbeiterinnen und Mitarbeiter der SchönesGlas GmbH bestimmt. Unbefugter Zugriff ist strafbar. Melden Sie sich nach jeder Sitzung ab.
+        </p>
+      </div>
+
+      <!-- Footer links -->
+      <div class="login-footer">
+        <p>
+          Passwort vergessen?
+          <a href="mailto:it@SchoenesGlas.optik">IT-Support kontaktieren</a>
+        </p>
+        <p>
+          Ihr Konto gesperrt? Rufen Sie an:
+          <a href="tel:+493012345699">+49 30 123 456 99</a>
+        </p>
+        <p style="margin-top:0.85rem">
+          <a href="index.html">← Zurück zur öffentlichen Website</a>
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" aria-label="SchönesGlas">
+            <span class="logo-icon">
+              <svg width="40" height="19" viewBox="0 0 46 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="11" cy="11" r="9" stroke="white" stroke-width="2.5" fill="none"/>
+                <circle cx="35" cy="11" r="9" stroke="white" stroke-width="2.5" fill="none"/>
+                <path d="M20 11 Q23 8.5 26 11" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <line x1="2" y1="7" x2="0" y2="13" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <line x1="44" y1="7" x2="46" y2="13" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <div class="logo-text">
+              <span class="logo-name">SchönesGlas</span>
+              <span class="logo-tagline">Optikerkette</span>
+            </div>
+          </a>
+          <p>Interner Mitarbeiterbereich. Nur für autorisiertes Personal der SchönesGlas Optikerkette GmbH.</p>
+        </div>
+        <nav class="footer-col" aria-label="Footer-Navigation">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Startseite</a></li>
+            <li><a href="produkte.html">Produkte</a></li>
+            <li><a href="dienstleistungen.html">Dienstleistungen</a></li>
+            <li><a href="ueber-uns.html">Über uns</a></li>
+            <li><a href="kontakt.html">Kontakt</a></li>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="mitarbeiter-login.html">Mitarbeiter</a></li>
+          </ul>
+        </nav>
+        <div class="footer-col">
+          <h4>Mitarbeiterportal</h4>
+          <ul>
+            <li><a href="mitarbeiter-login.html">Anmeldung</a></li>
+            <li><a href="mailto:it@SchoenesGlas.optik">IT-Support</a></li>
+            <li><a href="mailto:hr@SchoenesGlas.optik">Personalabteilung</a></li>
+            <li><a href="kontakt.html">Hauptfiliale</a></li>
+          </ul>
+        </div>
+        <address class="footer-col">
+          <h4>IT-Kontakt</h4>
+          <div class="footer-contact-item">
+            <span class="icon" aria-hidden="true">📞</span>
+            <a href="tel:+493012345699">+49 30 123 456 99</a>
+          </div>
+          <div class="footer-contact-item">
+            <span class="icon" aria-hidden="true">✉️</span>
+            <a href="mailto:it@SchoenesGlas.optik">it@SchoenesGlas.optik</a>
+          </div>
+          <div class="footer-contact-item">
+            <span class="icon" aria-hidden="true">🕐</span>
+            <span>Mo–Fr: 8–18 Uhr</span>
+          </div>
+        </address>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 SchönesGlas Optikerkette GmbH. Interner Bereich – vertraulich.</p>
+        <div>
+          <a href="impressum.html">Impressum</a>
+          <a href="impressum.html#datenschutz">Datenschutz</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Mitarbeiter-Login – SchönesGlas{% endblock %}
+
+{% block extra_style %}
+<style>
+  main { align-items: center; }
+  .login-wrap { max-width: 440px; width: 100%; }
+  .lock-icon {
+    width: 56px; height: 56px;
+    background: var(--clr-primary);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.5rem;
+  }
+  .remember-row {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .88rem;
+    color: var(--clr-muted);
+    margin-bottom: .25rem;
+  }
+  .remember-row input[type="checkbox"] { accent-color: var(--clr-primary); }
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 1.25rem;
+    font-size: .85rem;
+    color: var(--clr-muted);
+    text-decoration: none;
+  }
+  .back-link:hover { color: var(--clr-primary); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-wrap">
+  <div class="card">
+    <div class="lock-icon">🔒</div>
+
+    <h1 class="card-title" style="text-align:center;">Mitarbeiter-Anmeldung</h1>
+    <p class="card-subtitle" style="text-align:center;">
+      Bitte melden Sie sich mit Ihrer Mitarbeiter-ID und Ihrem Passwort an.
+    </p>
+
+    {% if error %}
+    <div class="alert alert-error">
+      <span class="alert-icon">⚠</span>
+      {{ error }}
+    </div>
+    {% endif %}
+
+    <form method="post" action="{{ url_for('login') }}" autocomplete="off">
+      <div class="form-group">
+        <label for="login">Mitarbeiter-ID</label>
+        <input
+          type="text"
+          id="login"
+          name="login"
+          placeholder="z. B. SG-1042"
+          pattern="SG-[0-9]{4,6}"
+          title="Format: SG-XXXX (z. B. SG-1042)"
+          required
+          autofocus
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="password">Passwort</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Passwort eingeben"
+          minlength="8"
+          required
+        >
+      </div>
+
+      <div class="remember-row">
+        <input type="checkbox" id="remember" name="remember">
+        <label for="remember" style="cursor:pointer;">Angemeldet bleiben</label>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="margin-top:1.25rem;">
+        Anmelden
+      </button>
+    </form>
+
+    <hr class="divider">
+
+    <div class="info-box">
+      <strong>Nur für autorisiertes Personal.</strong><br>
+      Unbefugter Zugriff ist strafbar.<br>
+      IT-Support: <a href="mailto:it@SchoenesGlas.optik">it@SchoenesGlas.optik</a>
+      &nbsp;·&nbsp; <a href="tel:+4930123456799">+49 30 123 456 99</a>
+    </div>
+  </div>
+
+  <a href="/site/" class="back-link">← Zurück zur Website</a>
+</div>
+{% endblock %}

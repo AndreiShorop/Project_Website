@@ -37,6 +37,7 @@
         <a href="ueber-uns.html"         class="nav-link">Über uns</a>
         <a href="kontakt.html"           class="nav-link nav-cta active">Kontakt</a>
         <a href="impressum.html"         class="nav-link">Impressum</a>
+        <a href="mitarbeiter-login.html" class="nav-link nav-link-staff">🔒 Mitarbeiter</a>
       </nav>
 
       <label for="nav-toggle" class="nav-toggle" aria-label="Navigation öffnen">
@@ -129,10 +130,18 @@
               </div>
             </div>
 
-            <!-- Map Placeholder -->
-            <div class="map-placeholder" role="img" aria-label="Standortkarte – Hauptstraße 42, 10115 Berlin">
-              🗺️
-              <p>Hauptstraße 42, 10115 Berlin</p>
+            <!-- Google Maps Embed -->
+            <div style="margin-top:2.5rem; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-sm);">
+              <iframe
+                src="https://maps.google.com/maps?q=Hauptstra%C3%9Fe+42%2C+10115+Berlin&output=embed&hl=de&z=16"
+                width="100%"
+                height="300"
+                style="border:0; display:block;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="SchönesGlas – Hauptstraße 42, 10115 Berlin"
+              ></iframe>
             </div>
           </div>
 
@@ -289,6 +298,7 @@
             <li><a href="ueber-uns.html">Über uns</a></li>
             <li><a href="kontakt.html">Kontakt</a></li>
             <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="mitarbeiter-login.html">Mitarbeiter</a></li>
           </ul>
         </nav>
         <div class="footer-col">
