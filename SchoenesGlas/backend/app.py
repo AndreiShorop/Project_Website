@@ -150,6 +150,74 @@ def change_password():
     return render_template("change_password.html", error=error, success=success)
 
 
+@app.route("/nachrichten")
+@login_required
+def nachrichten():
+    # Demo messages — stored in code as a sample.
+    # In production these would come from a DB table.
+    messages = [
+        {
+            "id": 1,
+            "von": "Geschäftsführung",
+            "betreff": "Willkommen im neuen Mitarbeiterportal",
+            "datum": "28.04.2026",
+            "gelesen": False,
+            "text": (
+                "Liebe Mitarbeiterinnen und Mitarbeiter,\n\n"
+                "wir freuen uns, euch das neue SchönesGlas Mitarbeiterportal vorzustellen. "
+                "Hier findet ihr ab sofort alle wichtigen internen Informationen, Ankündigungen "
+                "und Neuigkeiten aus dem Unternehmen.\n\n"
+                "Das Portal ist passwortgeschützt und ausschließlich für autorisiertes Personal "
+                "zugänglich. Bitte gebt eure Zugangsdaten nicht weiter.\n\n"
+                "Bei Fragen oder technischen Problemen steht euch das IT-Team unter "
+                "it@SchoenesGlas.optik jederzeit zur Verfügung.\n\n"
+                "Viele Grüße,\n"
+                "Die Geschäftsführung"
+            ),
+        },
+        {
+            "id": 2,
+            "von": "HR-Abteilung",
+            "betreff": "Urlaubsplanung 2026 – bitte bis 15. Mai eintragen",
+            "datum": "25.04.2026",
+            "gelesen": True,
+            "text": (
+                "Liebe Kolleginnen und Kollegen,\n\n"
+                "die Urlaubsplanung für das 3. und 4. Quartal 2026 beginnt. "
+                "Bitte tragt eure Wunschzeiten bis spätestens 15. Mai 2026 "
+                "in den gemeinsamen Urlaubskalender ein.\n\n"
+                "Den Kalender findet ihr im internen SharePoint unter:\n"
+                "HR → Urlaubsplanung → 2026\n\n"
+                "Bei Überschneidungen wird das HR-Team gemeinsam mit den "
+                "jeweiligen Filialleitern eine Lösung finden.\n\n"
+                "Herzliche Grüße,\n"
+                "Ihr HR-Team"
+            ),
+        },
+        {
+            "id": 3,
+            "von": "IT-Abteilung",
+            "betreff": "Wartungsarbeiten am Sonntag, 03.05.2026 – System kurzzeitig nicht verfügbar",
+            "datum": "24.04.2026",
+            "gelesen": True,
+            "text": (
+                "Sehr geehrte Mitarbeiterinnen und Mitarbeiter,\n\n"
+                "am Sonntag, den 03.05.2026 zwischen 02:00 und 06:00 Uhr werden "
+                "planmäßige Wartungsarbeiten an der IT-Infrastruktur durchgeführt.\n\n"
+                "In diesem Zeitraum sind folgende Systeme nicht erreichbar:\n"
+                "– Mitarbeiterportal\n"
+                "– E-Mail-Server\n"
+                "– Kassensystem (Filiale Berlin-Mitte)\n\n"
+                "Bitte plant eure Arbeit entsprechend und stellt sicher, "
+                "dass alle notwendigen Daten vorher gespeichert werden.\n\n"
+                "Vielen Dank für euer Verständnis.\n\n"
+                "IT-Team SchönesGlas"
+            ),
+        },
+    ]
+    return render_template("nachrichten.html", messages=messages)
+
+
 @app.route("/logout")
 @login_required
 def logout():

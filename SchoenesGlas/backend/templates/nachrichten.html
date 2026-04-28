@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+
+{% block title %}Nachrichten – SchönesGlas Mitarbeiterportal{% endblock %}
+
+{% block extra_style %}
+<style>
+  .page-wrap { max-width: 760px; width: 100%; }
+
+  /* ── Page header ── */
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+  }
+  .page-header h1 {
+    font-family: var(--font-head);
+    font-size: 1.65rem;
+    color: var(--clr-primary);
+  }
+  .page-header .unread-badge {
+    background: var(--clr-accent);
+    color: #fff;
+    font-size: .75rem;
+    font-weight: 700;
+    padding: .2rem .6rem;
+    border-radius: 20px;
+    vertical-align: middle;
+    margin-left: .4rem;
+  }
+
+  /* ── Message list ── */
+  .msg-list { display: flex; flex-direction: column; gap: .9rem; }
+
+  .msg-item {
+    background: var(--clr-surface);
+    border: 1.5px solid var(--clr-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow .2s, border-color .2s;
+  }
+  .msg-item:hover { box-shadow: var(--shadow); border-color: #b0bfd4; }
+  .msg-item.unread { border-left: 4px solid var(--clr-primary); }
+
+  /* ── Message summary row (always visible) ── */
+  .msg-summary {
+    display: grid;
+    grid-template-columns: 2rem 1fr auto;
+    align-items: center;
+    gap: .75rem;
+    padding: 1rem 1.25rem;
+  }
+  .msg-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--clr-primary);
+    justify-self: center;
+    flex-shrink: 0;
+  }
+  .msg-item:not(.unread) .msg-dot { background: transparent; }
+
+  .msg-main { min-width: 0; }
+  .msg-from {
+    font-size: .78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--clr-muted);
+    margin-bottom: .15rem;
+  }
+  .msg-subject {
+    font-weight: 700;
+    color: var(--clr-text);
+    font-size: .96rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .msg-item:not(.unread) .msg-subject { font-weight: 400; color: var(--clr-muted); }
+
+  .msg-date {
+    font-size: .8rem;
+    color: var(--clr-muted);
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  /* ── Message body (toggle visibility via checkbox hack) ── */
+  .msg-toggle { display: none; }
+  .msg-toggle:checked ~ .msg-body { display: block; }
+  .msg-toggle:checked ~ .msg-summary .msg-chevron { transform: rotate(180deg); }
+
+  .msg-body {
+    display: none;
+    border-top: 1px solid var(--clr-border);
+    padding: 1.25rem 1.5rem;
+    background: #fafbfd;
+  }
+  .msg-body pre {
+    font-family: var(--font-body);
+    font-size: .9rem;
+    line-height: 1.7;
+    color: var(--clr-text);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .msg-chevron {
+    color: var(--clr-muted);
+    font-size: .85rem;
+    transition: transform .2s;
+    flex-shrink: 0;
+  }
+
+  /* Make the whole summary row a label for the checkbox */
+  .msg-label {
+    display: contents;
+    cursor: pointer;
+  }
+
+  /* ── Empty state ── */
+  .empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--clr-muted);
+  }
+  .empty-state .empty-icon { font-size: 2.5rem; margin-bottom: .75rem; }
+
+  @media (max-width: 520px) {
+    .msg-summary { grid-template-columns: 1.5rem 1fr auto; padding: .85rem 1rem; }
+    .msg-subject { font-size: .88rem; }
+  }
+</style>
+{% endblock %}
+
+{% block header_right %}
+<div class="header-right">
+  <span class="worker-id">{{ session.worker_login }}</span>
+  <a href="{{ url_for('logout') }}" class="btn-logout">Abmelden</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="page-wrap">
+
+  <div class="page-header">
+    <div>
+      <h1>
+        📬 Nachrichten
+        {% set unread_count = messages | selectattr('gelesen', 'equalto', false) | list | length %}
+        {% if unread_count > 0 %}
+          <span class="unread-badge">{{ unread_count }} neu</span>
+        {% endif %}
+      </h1>
+      <p style="color:var(--clr-muted);font-size:.88rem;margin-top:.25rem;">
+        Interne Mitteilungen – nur für angemeldete Mitarbeiter sichtbar
+      </p>
+    </div>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary btn-sm">
+      ← Dashboard
+    </a>
+  </div>
+
+  <!-- Security notice -->
+  <div class="info-box" style="margin-bottom:1.5rem;">
+    🔒 <strong>Vertraulich.</strong>
+    Diese Nachrichten sind ausschließlich für autorisierte Mitarbeiterinnen und Mitarbeiter der SchönesGlas GmbH bestimmt.
+    Nicht weitergeben oder weiterleiten.
+  </div>
+
+  {% if messages %}
+  <div class="msg-list" role="list">
+    {% for msg in messages %}
+    <div class="msg-item {% if not msg.gelesen %}unread{% endif %}" role="listitem">
+      {# Checkbox trick — no JS needed to expand/collapse #}
+      <input type="checkbox" class="msg-toggle" id="msg-{{ msg.id }}">
+      <label class="msg-label" for="msg-{{ msg.id }}">
+        <div class="msg-summary">
+          <span class="msg-dot" aria-hidden="true"></span>
+          <div class="msg-main">
+            <div class="msg-from">{{ msg.von }}</div>
+            <div class="msg-subject">{{ msg.betreff }}</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="msg-date">{{ msg.datum }}</div>
+            <div class="msg-chevron" aria-hidden="true">▾</div>
+          </div>
+        </div>
+      </label>
+      <div class="msg-body">
+        <pre>{{ msg.text }}</pre>
+        <div style="margin-top:1rem;display:flex;gap:.75rem;flex-wrap:wrap;">
+          <label for="msg-{{ msg.id }}" class="btn btn-secondary btn-sm" style="cursor:pointer;">
+            Schließen
+          </label>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-icon">📭</div>
+    <p>Keine Nachrichten vorhanden.</p>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

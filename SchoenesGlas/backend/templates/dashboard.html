@@ -47,6 +47,18 @@
   <!-- Action cards -->
   <div class="dashboard-grid">
 
+    <!-- ── Nachrichten ── -->
+    <div class="action-card" style="border-color:var(--clr-primary);">
+      <div class="action-title">📬 Nachrichten</div>
+      <div class="action-desc">
+        Interne Mitteilungen der Geschäftsführung und HR-Abteilung.<br>
+        Nur für angemeldete Mitarbeiter sichtbar.
+      </div>
+      <a href="{{ url_for('nachrichten') }}" class="btn btn-primary btn-sm">
+        Nachrichten öffnen
+      </a>
+    </div>
+
     <!-- ── Passwort zurücksetzen ── -->
     <div class="action-card" style="border-color:var(--clr-accent);">
       <div class="action-title">🔑 Passwort zurücksetzen</div>
